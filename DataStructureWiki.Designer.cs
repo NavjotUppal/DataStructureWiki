@@ -46,6 +46,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.statusStripMsg = new System.Windows.Forms.StatusStrip();
             this.SuspendLayout();
             // 
             // label1
@@ -122,6 +123,7 @@
             this.buttonADD.TabIndex = 8;
             this.buttonADD.Text = "ADD";
             this.buttonADD.UseVisualStyleBackColor = true;
+            this.buttonADD.Click += new System.EventHandler(this.buttonADD_Click);
             // 
             // buttonEDIT
             // 
@@ -199,11 +201,21 @@
             this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader2.Width = 100;
             // 
+            // statusStripMsg
+            // 
+            this.statusStripMsg.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStripMsg.Location = new System.Drawing.Point(0, 426);
+            this.statusStripMsg.Name = "statusStripMsg";
+            this.statusStripMsg.Size = new System.Drawing.Size(800, 24);
+            this.statusStripMsg.TabIndex = 17;
+            this.statusStripMsg.Text = "statusStrip1";
+            // 
             // DataStructureWiki
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.statusStripMsg);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonSEARCH);
             this.Controls.Add(this.textBox1);
@@ -247,6 +259,7 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.StatusStrip statusStripMsg;
     }
 }
 
