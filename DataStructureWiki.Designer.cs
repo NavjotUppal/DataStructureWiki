@@ -139,7 +139,7 @@
             // 
             this.buttonDELETE.Location = new System.Drawing.Point(293, 402);
             this.buttonDELETE.Name = "buttonDELETE";
-            this.buttonDELETE.Size = new System.Drawing.Size(75, 23);
+            this.buttonDELETE.Size = new System.Drawing.Size(85, 23);
             this.buttonDELETE.TabIndex = 10;
             this.buttonDELETE.Text = "DELETE";
             this.buttonDELETE.UseVisualStyleBackColor = true;
@@ -183,6 +183,7 @@
             this.listViewData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
             this.columnHeaderCategory});
+            this.listViewData.FullRowSelect = true;
             this.listViewData.HideSelection = false;
             this.listViewData.Location = new System.Drawing.Point(495, 96);
             this.listViewData.Name = "listViewData";
@@ -190,6 +191,7 @@
             this.listViewData.TabIndex = 16;
             this.listViewData.UseCompatibleStateImageBehavior = false;
             this.listViewData.View = System.Windows.Forms.View.Details;
+            this.listViewData.Click += new System.EventHandler(this.listViewData_Click);
             // 
             // columnHeaderName
             // 

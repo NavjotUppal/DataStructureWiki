@@ -29,20 +29,22 @@ namespace DataStructureWiki
             string category = textBoxCategory.Text;
             string structure = textBoxStructure.Text;
             string description = textBoxDescription.Text;
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category) 
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category)
                 || string.IsNullOrEmpty(structure) || string.IsNullOrEmpty(description))
             {
-                statusStripMsg.Text = "All fields should have value.";
+                statusStripMsg.Items.Add("Null or Empty values are not accepted");
+                textBoxName.Focus();
             }
+
             else
             {
-                for(int i = 0; i <rows; i++)
+                for (int i = 0; i < rows; i++)
                 {
                     dataStructure[i, 0] = name;
                     dataStructure[i, 1] = category;
                     dataStructure[i, 2] = structure;
                     dataStructure[i, 3] = description;
-                   
+
                 }
                 ptr++;
                 clearTextBoxes();
@@ -62,25 +64,48 @@ namespace DataStructureWiki
         // 9.3	Create an EDIT button that will allow the user to modify any information from the 4 text boxes into the 2D array
         private void buttonEDIT_Click(object sender, EventArgs e)
         {
+            if (listViewData.Items.Count > 0)
+            {
+                listViewData.Items[0].Selected = true;
+                int index = listViewData.SelectedIndices[0];
+                listViewData.Items.RemoveAt(index);
+                dataStructure[index, 0] = textBoxName.Text;
+                dataStructure[index, 1] = textBoxCategory.Text;
+                dataStructure[index, 2] = textBoxStructure.Text;
+                dataStructure[index, 3] = textBoxDescription.Text;
+                
+                ptr = index;
+               updateListViewData();
+                clearTextBoxes();
 
+            }
         }
 
         //Adding data in listview
         private void updateListViewData()
         {
-            
-            listViewData.Items.Clear();
-            if(ptr<rows)
+
+            //listViewData.Items.Clear();
+            if (ptr < rows)
             {
-                ListViewItem listViewItem = new ListViewItem(dataStructure[ptr,0]);
-                listViewItem.SubItems.Add(dataStructure[ptr,1]);
+                ListViewItem listViewItem = new ListViewItem(dataStructure[ptr, 0]);
+                listViewItem.SubItems.Add(dataStructure[ptr, 1]);
                 listViewData.Items.Add(listViewItem);
             }
-            else {
+            else
+            {
                 MessageBox.Show("Data cannot be entered as storage is FULL");
             }
         }
 
+        private void listViewData_Click(object sender, EventArgs e)
+        {
+            int index = listViewData.SelectedIndices[0];
+            textBoxName.Text = dataStructure[index, 0].ToString();
+            textBoxCategory.Text = dataStructure[index, 1].ToString();
+            textBoxStructure.Text = dataStructure[index, 2].ToString();
+            textBoxDescription.Text = dataStructure[index, 3].ToString();
 
+        }
     }
 }
