@@ -43,9 +43,9 @@
             this.buttonSAVE = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonSEARCH = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listViewData = new System.Windows.Forms.ListView();
+            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStripMsg = new System.Windows.Forms.StatusStrip();
             this.SuspendLayout();
             // 
@@ -133,6 +133,7 @@
             this.buttonEDIT.TabIndex = 9;
             this.buttonEDIT.Text = "EDIT";
             this.buttonEDIT.UseVisualStyleBackColor = true;
+            this.buttonEDIT.Click += new System.EventHandler(this.buttonEDIT_Click);
             // 
             // buttonDELETE
             // 
@@ -145,7 +146,7 @@
             // 
             // buttonLOAD
             // 
-            this.buttonLOAD.Location = new System.Drawing.Point(440, 25);
+            this.buttonLOAD.Location = new System.Drawing.Point(495, 29);
             this.buttonLOAD.Name = "buttonLOAD";
             this.buttonLOAD.Size = new System.Drawing.Size(75, 23);
             this.buttonLOAD.TabIndex = 12;
@@ -154,7 +155,7 @@
             // 
             // buttonSAVE
             // 
-            this.buttonSAVE.Location = new System.Drawing.Point(634, 28);
+            this.buttonSAVE.Location = new System.Drawing.Point(689, 29);
             this.buttonSAVE.Name = "buttonSAVE";
             this.buttonSAVE.Size = new System.Drawing.Size(75, 23);
             this.buttonSAVE.TabIndex = 13;
@@ -163,50 +164,50 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(440, 402);
+            this.textBox1.Location = new System.Drawing.Point(495, 402);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(171, 22);
             this.textBox1.TabIndex = 14;
             // 
             // buttonSEARCH
             // 
-            this.buttonSEARCH.Location = new System.Drawing.Point(649, 402);
+            this.buttonSEARCH.Location = new System.Drawing.Point(709, 403);
             this.buttonSEARCH.Name = "buttonSEARCH";
             this.buttonSEARCH.Size = new System.Drawing.Size(84, 23);
             this.buttonSEARCH.TabIndex = 15;
             this.buttonSEARCH.Text = "SEARCH";
             this.buttonSEARCH.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // listViewData
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(440, 96);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(269, 271);
-            this.listView1.TabIndex = 16;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderName,
+            this.columnHeaderCategory});
+            this.listViewData.HideSelection = false;
+            this.listViewData.Location = new System.Drawing.Point(495, 96);
+            this.listViewData.Name = "listViewData";
+            this.listViewData.Size = new System.Drawing.Size(269, 271);
+            this.listViewData.TabIndex = 16;
+            this.listViewData.UseCompatibleStateImageBehavior = false;
+            this.listViewData.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader1
+            // columnHeaderName
             // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 100;
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 100;
             // 
-            // columnHeader2
+            // columnHeaderCategory
             // 
-            this.columnHeader2.Text = "Category";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 100;
+            this.columnHeaderCategory.Text = "Category";
+            this.columnHeaderCategory.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeaderCategory.Width = 100;
             // 
             // statusStripMsg
             // 
             this.statusStripMsg.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStripMsg.Location = new System.Drawing.Point(0, 426);
+            this.statusStripMsg.Location = new System.Drawing.Point(0, 472);
             this.statusStripMsg.Name = "statusStripMsg";
-            this.statusStripMsg.Size = new System.Drawing.Size(800, 24);
+            this.statusStripMsg.Size = new System.Drawing.Size(912, 22);
             this.statusStripMsg.TabIndex = 17;
             this.statusStripMsg.Text = "statusStrip1";
             // 
@@ -214,9 +215,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(912, 494);
             this.Controls.Add(this.statusStripMsg);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewData);
             this.Controls.Add(this.buttonSEARCH);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonSAVE);
@@ -256,9 +257,9 @@
         private System.Windows.Forms.Button buttonSAVE;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonSEARCH;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ListView listViewData;
+        private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ColumnHeader columnHeaderCategory;
         private System.Windows.Forms.StatusStrip statusStripMsg;
     }
 }

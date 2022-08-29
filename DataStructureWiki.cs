@@ -20,6 +20,7 @@ namespace DataStructureWiki
         static int rows = 12;
         static int columns = 4;
         string[,] dataStructure = new string[rows, columns];
+        int ptr = 0; // pointer for row count
 
         //9.2	Create an ADD button that will store the information from the 4 text boxes into the 2D array
         private void buttonADD_Click(object sender, EventArgs e)
@@ -43,7 +44,9 @@ namespace DataStructureWiki
                     dataStructure[i, 3] = description;
                    
                 }
+                ptr++;
                 clearTextBoxes();
+                updateListViewData();
             }
 
         }
@@ -51,9 +54,33 @@ namespace DataStructureWiki
         {
             textBoxName.Clear();
             textBoxCategory.Clear();
-            textBoxCategory.Clear();
+            textBoxStructure.Clear();
             textBoxDescription.Clear();
             textBoxName.Focus();
         }
+
+        // 9.3	Create an EDIT button that will allow the user to modify any information from the 4 text boxes into the 2D array
+        private void buttonEDIT_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //Adding data in listview
+        private void updateListViewData()
+        {
+            
+            listViewData.Items.Clear();
+            if(ptr<rows)
+            {
+                ListViewItem listViewItem = new ListViewItem(dataStructure[ptr,0]);
+                listViewItem.SubItems.Add(dataStructure[ptr,1]);
+                listViewData.Items.Add(listViewItem);
+            }
+            else {
+                MessageBox.Show("Data cannot be entered as storage is FULL");
+            }
+        }
+
+
     }
 }
