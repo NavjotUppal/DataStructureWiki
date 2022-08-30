@@ -41,7 +41,7 @@
             this.buttonDELETE = new System.Windows.Forms.Button();
             this.buttonLOAD = new System.Windows.Forms.Button();
             this.buttonSAVE = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonSEARCH = new System.Windows.Forms.Button();
             this.listViewData = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -143,6 +143,7 @@
             this.buttonDELETE.TabIndex = 10;
             this.buttonDELETE.Text = "DELETE";
             this.buttonDELETE.UseVisualStyleBackColor = true;
+            this.buttonDELETE.Click += new System.EventHandler(this.buttonDELETE_Click);
             // 
             // buttonLOAD
             // 
@@ -162,12 +163,12 @@
             this.buttonSAVE.Text = "SAVE";
             this.buttonSAVE.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBoxSearch
             // 
-            this.textBox1.Location = new System.Drawing.Point(495, 402);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(171, 22);
-            this.textBox1.TabIndex = 14;
+            this.textBoxSearch.Location = new System.Drawing.Point(495, 402);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(171, 22);
+            this.textBoxSearch.TabIndex = 14;
             // 
             // buttonSEARCH
             // 
@@ -221,7 +222,7 @@
             this.Controls.Add(this.statusStripMsg);
             this.Controls.Add(this.listViewData);
             this.Controls.Add(this.buttonSEARCH);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.buttonSAVE);
             this.Controls.Add(this.buttonLOAD);
             this.Controls.Add(this.buttonDELETE);
@@ -257,7 +258,7 @@
         private System.Windows.Forms.Button buttonDELETE;
         private System.Windows.Forms.Button buttonLOAD;
         private System.Windows.Forms.Button buttonSAVE;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonSEARCH;
         private System.Windows.Forms.ListView listViewData;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
