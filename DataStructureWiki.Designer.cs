@@ -47,6 +47,7 @@
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStripMsg = new System.Windows.Forms.StatusStrip();
+            this.buttonSORT = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -214,11 +215,22 @@
             this.statusStripMsg.TabIndex = 17;
             this.statusStripMsg.Text = "statusStrip1";
             // 
+            // buttonSORT
+            // 
+            this.buttonSORT.Location = new System.Drawing.Point(548, 58);
+            this.buttonSORT.Name = "buttonSORT";
+            this.buttonSORT.Size = new System.Drawing.Size(173, 23);
+            this.buttonSORT.TabIndex = 18;
+            this.buttonSORT.Text = "Click to SORT";
+            this.buttonSORT.UseVisualStyleBackColor = true;
+            this.buttonSORT.Click += new System.EventHandler(this.buttonSORT_Click);
+            // 
             // DataStructureWiki
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 494);
+            this.Controls.Add(this.buttonSORT);
             this.Controls.Add(this.statusStripMsg);
             this.Controls.Add(this.listViewData);
             this.Controls.Add(this.buttonSEARCH);
@@ -264,6 +276,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderCategory;
         private System.Windows.Forms.StatusStrip statusStripMsg;
+        private System.Windows.Forms.Button buttonSORT;
     }
 }
 

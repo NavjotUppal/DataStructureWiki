@@ -59,14 +59,7 @@ namespace DataStructureWiki
 
         }
         #endregion
-        private void clearTextBoxes()
-        {
-            textBoxName.Clear();
-            textBoxCategory.Clear();
-            textBoxStructure.Clear();
-            textBoxDescription.Clear();
-            textBoxName.Focus();
-        }
+
 
         // 9.3	Create an EDIT button that will allow the user to modify any information from the 4 text boxes into the 2D array
         #region EDIT
@@ -86,6 +79,50 @@ namespace DataStructureWiki
 
         }
         #endregion
+
+        // 9.4	Create a DELETE button that removes all the information from a single entry of the array; the user must be prompted before the final deletion occurs,
+        #region DELETE
+        private void buttonDELETE_Click(object sender, EventArgs e)
+        {
+            int index = listViewData.SelectedIndices[0];
+            listViewData.Items.RemoveAt(index);
+            //shifting the data in structure
+            for (int i = index; i < ptr; i++)
+            {
+                dataStructure[index, 0] = dataStructure[index + 1, 0];
+                dataStructure[index, 1] = dataStructure[index + 1, 1];
+                dataStructure[index, 2] = dataStructure[index + 1, 2];
+                dataStructure[index, 3] = dataStructure[index + 1, 3];
+
+            }
+            ptr--;
+            // updateListViewData();
+            clearTextBoxes();
+        }
+        #endregion
+        // 9.6	Write the code for a Bubble Sort method to sort the 2D array by Name ascending,
+        // ensure you use a separate swap method that passes the array element to be swapped (do not use any built-in array methods),
+        private void buttonSORT_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < ptr; i++)
+            {
+                if(String.Compare(dataStructure[i, 0], dataStructure[i+1, 0],StringComparison.Ordinal) > 0)
+                {
+                    swap(i);
+                }
+            }
+            updateListViewData();
+        }
+        #region UTILITIES
+        //9.5	Create a CLEAR method to clear the four text boxes so a new definition can be added
+        private void clearTextBoxes()
+        {
+            textBoxName.Clear();
+            textBoxCategory.Clear();
+            textBoxStructure.Clear();
+            textBoxDescription.Clear();
+            textBoxName.Focus();
+        }
         //Adding/Updating data in listview
         private void updateListViewData()
         {
@@ -118,27 +155,18 @@ namespace DataStructureWiki
             textBoxDescription.Text = dataStructure[pos, 3];
 
         }
-        // 9.4	Create a DELETE button that removes all the information from a single entry of the array; the user must be prompted before the final deletion occurs,
-        #region DELETE
-        private void buttonDELETE_Click(object sender, EventArgs e)
+        private void swap(int i)
         {
-            int index = listViewData.SelectedIndices[0];
-            listViewData.Items.RemoveAt(index);
-            //shifting the data in structure
-            for (int i = index; i < ptr; i++)
+            String temp;
+            for (int j = 0; j < columns; j++)
             {
-                dataStructure[index, 0] = dataStructure[index + 1, 0];
-                dataStructure[index, 1] = dataStructure[index + 1, 1];
-                dataStructure[index, 2] = dataStructure[index + 1, 2];
-                dataStructure[index, 3] = dataStructure[index + 1, 3];
-
+                temp = dataStructure[i, j];
+                dataStructure[i, j] = dataStructure[i+1, j];
+                dataStructure[i+1, j] = temp;
             }
-            ptr--;
-            // updateListViewData();
-            clearTextBoxes();
         }
         #endregion
-        
+
 
     }
 }
