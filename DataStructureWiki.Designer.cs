@@ -154,6 +154,7 @@
             this.buttonLOAD.TabIndex = 12;
             this.buttonLOAD.Text = "LOAD";
             this.buttonLOAD.UseVisualStyleBackColor = true;
+            this.buttonLOAD.Click += new System.EventHandler(this.buttonLOAD_Click);
             // 
             // buttonSAVE
             // 
@@ -163,6 +164,7 @@
             this.buttonSAVE.TabIndex = 13;
             this.buttonSAVE.Text = "SAVE";
             this.buttonSAVE.UseVisualStyleBackColor = true;
+            this.buttonSAVE.Click += new System.EventHandler(this.buttonSAVE_Click);
             // 
             // textBoxSearch
             // 
@@ -179,6 +181,7 @@
             this.buttonSEARCH.TabIndex = 15;
             this.buttonSEARCH.Text = "SEARCH";
             this.buttonSEARCH.UseVisualStyleBackColor = true;
+            this.buttonSEARCH.Click += new System.EventHandler(this.buttonSEARCH_Click);
             // 
             // listViewData
             // 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DataStructureWiki
 {
@@ -106,12 +107,19 @@ namespace DataStructureWiki
         {
             for (int i = 0; i < ptr; i++)
             {
-                if(String.Compare(dataStructure[i, 0], dataStructure[i+1, 0],StringComparison.Ordinal) > 0)
+                if (String.Compare(dataStructure[i, 0], dataStructure[i + 1, 0], StringComparison.Ordinal) > 0)
                 {
                     swap(i);
                 }
             }
             updateListViewData();
+        }
+
+        // 9.7	Write the code for a Binary Search for the Name in the 2D array and display the information in the other textboxes when found,
+        // add suitable feedback if the search in not successful and clear the search textbox (do not use any built-in array methods),
+        private void buttonSEARCH_Click(object sender, EventArgs e)
+        {
+
         }
         #region UTILITIES
         //9.5	Create a CLEAR method to clear the four text boxes so a new definition can be added
@@ -123,7 +131,7 @@ namespace DataStructureWiki
             textBoxDescription.Clear();
             textBoxName.Focus();
         }
-        //Adding/Updating data in listview
+        //9.8	Create a display method that will show the following information in a ListView: Name and Category
         private void updateListViewData()
         {
 
@@ -137,7 +145,7 @@ namespace DataStructureWiki
             }
 
         }
-        //selecting row in listview
+        //9.9	Create a method so the user can select a definition (Name) from the ListView and all the information is displayed in the appropriate Textboxes,
         private void listViewData_Click(object sender, EventArgs e)
         {
             int pos = listViewData.SelectedIndices[0];
@@ -161,12 +169,98 @@ namespace DataStructureWiki
             for (int j = 0; j < columns; j++)
             {
                 temp = dataStructure[i, j];
-                dataStructure[i, j] = dataStructure[i+1, j];
-                dataStructure[i+1, j] = temp;
+                dataStructure[i, j] = dataStructure[i + 1, j];
+                dataStructure[i + 1, j] = temp;
             }
         }
+
         #endregion
+        //9.10	Create a SAVE button so the information from the 2D array can be written into a
+        //binary file called definitions.dat which is sorted by Name, ensure the user has the option to select an alternative file.
+        //Use a file stream and BinaryWriter to create the file.
+        private void buttonSAVE_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "bin file|=.bin";
+            saveFileDialog.Title = "Save a BIN file";
+            saveFileDialog.InitialDirectory = Application.StartupPath;
+            saveFileDialog.DefaultExt = "bin";
+            string defaultFileName = "default.bin";
+            saveFileDialog.ShowDialog();
+            string fileName = saveFileDialog.FileName;
+            if (saveFileDialog.FileName != "")
+            {
+                saveDataFile(fileName);
+            }
+            else
+            {
+                saveDataFile(defaultFileName);
+            }
+        }
+        private void saveDataFile(string saveFileName)
+        {
+            using (Stream stream = File.Open(saveFileName, FileMode.Create))
+            {
+                using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
+                {
+                    for (int x = 0; x < rows; x++)
+                    {
+                        for (int y = 0; y < columns; y++)
+                        {
+                            if (dataStructure[x, y] != null)
+                            {
+                                writer.Write(dataStructure[x, y]);
+                            }
+                        }
+                    }
+                    writer.Write(ptr);
+                }
+            }
+        }
+        // 9.11	Create a LOAD button that will read the information from a binary file
+        // called definitions.dat into the 2D array, ensure the user has the option to select an alternative file.
+        // Use a file stream and BinaryReader to complete this task.
+        private void buttonLOAD_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Application.StartupPath;
+            openFileDialog.Filter = "BIN FILES|*.bin";
+            openFileDialog.Title = "Open a BIN file";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                openDataFile(openFileDialog.FileName);
+                
+            }
 
 
+        }
+        private void openDataFile(string openFileName)
+        {
+            try
+            {
+                using (Stream stream = File.Open(openFileName, FileMode.Open))
+                {
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                    {
+                        int i = 0;
+                        Array.Clear(dataStructure, 0, dataStructure.Length);
+                        while (stream.Position < stream.Length)
+                        {
+                            for (int j = 0; j < columns; j++)
+                            {
+                                dataStructure[i, j] = reader.ReadString();
+                            }
+                            i++;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            updateListViewData();
+        }
     }
 }
