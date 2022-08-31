@@ -51,7 +51,9 @@ namespace DataStructureWiki
                 }
                 ptr++;
                 clearTextBoxes();
+                statusStripMsg.Items.Clear();
                 updateListViewData();
+                statusStripMsg.Items.Add("Data Structure has been added in the list.");
             }
             else
             {
@@ -76,7 +78,8 @@ namespace DataStructureWiki
             dataStructure[index, 3] = textBoxDescription.Text;
             updateListViewData();
             clearTextBoxes();
-
+            statusStripMsg.Items.Clear();
+            statusStripMsg.Items.Add("Data structure is updated.");
 
         }
         #endregion EDIT
@@ -85,36 +88,37 @@ namespace DataStructureWiki
         #region DELETE
         private void buttonDELETE_Click(object sender, EventArgs e)
         {
-            int index = listViewData.SelectedIndices[0];
-            listViewData.Items.RemoveAt(index);
-            //shifting the data in structure
-            for (int i = index; i < ptr; i++)
+            DialogResult result;
+            result = MessageBox.Show("Warning! Do you really wish to delete the record?", "Warning", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                dataStructure[index, 0] = dataStructure[index + 1, 0];
-                dataStructure[index, 1] = dataStructure[index + 1, 1];
-                dataStructure[index, 2] = dataStructure[index + 1, 2];
-                dataStructure[index, 3] = dataStructure[index + 1, 3];
+                int index = listViewData.SelectedIndices[0];
+                listViewData.Items.RemoveAt(index);
+                //shifting the data in structure
+                for (int i = index; i < ptr; i++)
+                {
+                    dataStructure[index, 0] = dataStructure[index + 1, 0];
+                    dataStructure[index, 1] = dataStructure[index + 1, 1];
+                    dataStructure[index, 2] = dataStructure[index + 1, 2];
+                    dataStructure[index, 3] = dataStructure[index + 1, 3];
 
+                }
+                ptr--;
+                // updateListViewData();
+                clearTextBoxes();
+
+                statusStripMsg.Items.Clear();
+                statusStripMsg.Items.Add("Data structure has been deleted.");
             }
-            ptr--;
-            // updateListViewData();
-            clearTextBoxes();
+            else
+            {
+                statusStripMsg.Items.Clear();
+                statusStripMsg.Items.Add("Delete is canceled!");
+            }
         }
         #endregion DELETE
-        // 9.6	Write the code for a Bubble Sort method to sort the 2D array by Name ascending,
-        // ensure you use a separate swap method that passes the array element to be swapped (do not use any built-in array methods),
-        private void buttonSORT_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < ptr; i++)
-            {
-                if (String.Compare(dataStructure[i, 0], dataStructure[i + 1, 0], StringComparison.Ordinal) > 0)
-                {
-                    swap(i);
-                }
-            }
-            updateListViewData();
-        }
 
+        #region SaveLoad
         // 9.7	Write the code for a Binary Search for the Name in the 2D array and display the information in the other textboxes when found,
         // add suitable feedback if the search in not successful and clear the search textbox (do not use any built-in array methods),
         private void buttonSEARCH_Click(object sender, EventArgs e)
@@ -138,11 +142,17 @@ namespace DataStructureWiki
             if (saveFileDialog.FileName != "")
             {
                 saveDataFile(fileName);
+
             }
             else
             {
                 saveDataFile(defaultFileName);
             }
+            statusStripMsg.Items.Clear();
+            statusStripMsg.Items.Add("File has been saved.");
+            clearTextBoxes();
+            listViewData.Items.Clear();
+
         }
         private void saveDataFile(string saveFileName)
         {
@@ -166,7 +176,7 @@ namespace DataStructureWiki
         // 9.11	Create a LOAD button that will read the information from a binary file
         // called definitions.dat into the 2D array, ensure the user has the option to select an alternative file.
         // Use a file stream and BinaryReader to complete this task.
-        #region SaveLoad
+
         private void buttonLOAD_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -177,7 +187,8 @@ namespace DataStructureWiki
             {
 
                 openDataFile(openFileDialog.FileName);
-
+                statusStripMsg.Items.Clear();
+                statusStripMsg.Items.Add("Contents of file are loaded in ListView.");
             }
         }
         private void openDataFile(string openFileName)
@@ -248,6 +259,8 @@ namespace DataStructureWiki
 
             //int index = listViewData.Items.IndexOf(listViewData.SelectedItems[0]);
             displayData(pos);
+            statusStripMsg.Items.Clear();
+            statusStripMsg.Items.Add("Data is loaded into textboxes from the listview.");
 
         }
         private void displayData(int pos)
@@ -258,18 +271,42 @@ namespace DataStructureWiki
             textBoxDescription.Text = dataStructure[pos, 3];
 
         }
-        private void swap(int i)
-        {
-            String temp;
-            for (int j = 0; j < columns; j++)
-            {
-                temp = dataStructure[i, j];
-                dataStructure[i, j] = dataStructure[i + 1, j];
-                dataStructure[i + 1, j] = temp;
-            }
-        }
+
 
         #endregion UTILITIES
+        private void swap(int row, int col)
+        {
+            string temp;
+            temp = dataStructure[row, col];
+            dataStructure[row, col] = dataStructure[row + 1, col];
+            dataStructure[row + 1, col] = temp;
 
+        }
+        #region SORT
+        // 9.6	Write the code for a Bubble Sort method to sort the 2D array by Name ascending,
+        // ensure you use a separate swap method that passes the array element to be swapped (do not use any built-in array methods),
+        private void buttonSORT_Click(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < ptr; i++)
+            {
+                for (int j = 0; j < ptr - 1; j++)
+                {
+
+                    //int index = i;
+                    if (string.CompareOrdinal(dataStructure[j, 0], dataStructure[j + 1, 0]) > 0)
+                    {
+                        for (int k = 0; k < columns; j++)
+                        {
+                            swap(j, k);
+                        }
+                    }
+
+                }
+            }
+
+           // updateListViewData();
+        }
+        #endregion SORT
     }
 }
