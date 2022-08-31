@@ -119,12 +119,7 @@ namespace DataStructureWiki
         #endregion DELETE
 
         #region SaveLoad
-        // 9.7	Write the code for a Binary Search for the Name in the 2D array and display the information in the other textboxes when found,
-        // add suitable feedback if the search in not successful and clear the search textbox (do not use any built-in array methods),
-        private void buttonSEARCH_Click(object sender, EventArgs e)
-        {
 
-        }
 
         //9.10	Create a SAVE button so the information from the 2D array can be written into a
         //binary file called definitions.dat which is sorted by Name, ensure the user has the option to select an alternative file.
@@ -280,7 +275,7 @@ namespace DataStructureWiki
             for (int j = 0; j < columns; j++)
             {
                 temp = dataStructure[i, j];
-                dataStructure[i, j] = dataStructure[i+ 1, j];
+                dataStructure[i, j] = dataStructure[i + 1, j];
                 dataStructure[i + 1, j] = temp;
             }
 
@@ -295,7 +290,7 @@ namespace DataStructureWiki
             {
                 for (int j = 0; j < ptr - 1; j++)
                 {
-                    if (!(string.IsNullOrEmpty(dataStructure[j+1,0]))) 
+                    if (!(string.IsNullOrEmpty(dataStructure[j + 1, 0])))
                     {
                         //int index = i;
                         if (string.Compare(dataStructure[j, 0], dataStructure[j + 1, 0]) == 1)
@@ -310,6 +305,78 @@ namespace DataStructureWiki
 
             updateListViewData();
         }
+        public void sort()
+        {
+            for (int i = 0; i < ptr; i++)
+            {
+                for (int j = 0; j < ptr - 1; j++)
+                {
+                    if (!(string.IsNullOrEmpty(dataStructure[j + 1, 0])))
+                    {
+                        //int index = i;
+                        if (string.Compare(dataStructure[j, 0], dataStructure[j + 1, 0]) == 1)
+                        {
+                            swap(j);
+
+                        }
+                    }
+
+                }
+            }
+
+            updateListViewData();
+
+        }
         #endregion SORT
+        #region Binary Search
+        // 9.7	Write the code for a Binary Search for the Name in the 2D array and display the information in the other textboxes when found,
+        // add suitable feedback if the search in not successful and clear the search textbox (do not use any built-in array methods),
+        private void buttonSEARCH_Click(object sender, EventArgs e)
+        {
+            sort();
+            bool found = false;
+            string search;
+            search = textBoxSearch.Text;
+            int low = 0;
+            int high = ptr;
+            int mid;
+            if (search == "")
+            {
+                MessageBox.Show("The Search text field is NULL");
+                textBoxSearch.Focus();
+            }
+            while (!found)
+            {
+                if(low >= high)
+                {
+                    found = false;
+                    break;
+                }
+                mid = (low + high) / 2;
+                int compare = search.CompareTo(dataStructure[mid, 0]);
+                if (compare == 0)
+                {
+                    displayData(mid);
+                    listViewData.Items[mid].Selected = true;
+                    found = true;
+                }
+                else if (compare < 0)
+                {
+                    high= mid - 1;
+                }
+                else if (compare > 0)
+                {
+                    low = mid + 1;
+                }
+            }
+            if (found == false)
+            {
+                MessageBox.Show(search + " not found. Try again");
+            }
+            textBoxSearch.Clear();
+            textBoxSearch.Focus();
+        }
+
+        #endregion Binary Search
     }
 }
