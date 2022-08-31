@@ -274,12 +274,15 @@ namespace DataStructureWiki
 
 
         #endregion UTILITIES
-        private void swap(int row, int col)
+        private void swap(int i)
         {
             string temp;
-            temp = dataStructure[row, col];
-            dataStructure[row, col] = dataStructure[row + 1, col];
-            dataStructure[row + 1, col] = temp;
+            for (int j = 0; j < columns; j++)
+            {
+                temp = dataStructure[i, j];
+                dataStructure[i, j] = dataStructure[i+ 1, j];
+                dataStructure[i + 1, j] = temp;
+            }
 
         }
         #region SORT
@@ -292,20 +295,20 @@ namespace DataStructureWiki
             {
                 for (int j = 0; j < ptr - 1; j++)
                 {
-
-                    //int index = i;
-                    if (string.CompareOrdinal(dataStructure[j, 0], dataStructure[j + 1, 0]) > 0)
+                    if (!(string.IsNullOrEmpty(dataStructure[j+1,0]))) 
                     {
-                        for (int k = 0; k < columns; j++)
+                        //int index = i;
+                        if (string.Compare(dataStructure[j, 0], dataStructure[j + 1, 0]) == 1)
                         {
-                            swap(j, k);
+                            swap(j);
+
                         }
                     }
 
                 }
             }
 
-           // updateListViewData();
+            updateListViewData();
         }
         #endregion SORT
     }
