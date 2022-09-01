@@ -32,32 +32,45 @@ namespace DataStructureWiki
             string category = textBoxCategory.Text;
             string structure = textBoxStructure.Text;
             string description = textBoxDescription.Text;
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category)
-                || string.IsNullOrEmpty(structure) || string.IsNullOrEmpty(description))
+            bool exist = false;
+            for (int i = 0; i < rows; i++)
             {
-                statusStripMsg.Items.Add("Null or Empty values are not accepted");
-                textBoxName.Focus();
+                if (dataStructure[i, 0] == textBoxName.Text)
+                {
+                    MessageBox.Show("Data Structure Already exist.");
+                    clearTextBoxes();
+                    textBoxName.Focus();
+                    exist = true;
+                    break;
+                }
             }
 
-            else if (ptr < rows)
+
+            if (exist == false && ptr < rows)
             {
-                //for (int i = 0; i < rows; i++)
+                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category)
+           || string.IsNullOrEmpty(structure) || string.IsNullOrEmpty(description))
+                {
+                    toolStripStatusLabel.Text = "NULL values are not accepted. Please check your Input";
+                    textBoxName.Focus();
+                }
+                else
                 {
                     dataStructure[ptr, 0] = name.ToString();
                     dataStructure[ptr, 1] = category.ToString();
                     dataStructure[ptr, 2] = structure.ToString();
                     dataStructure[ptr, 3] = description.ToString();
-
+                    ptr++;
+                    clearTextBoxes();
+                    updateListViewData();
+                    toolStripStatusLabel.Text = name + " Data Structure is added to the list.";
                 }
-                ptr++;
-                clearTextBoxes();
-                statusStripMsg.Items.Clear();
-                updateListViewData();
-                statusStripMsg.Items.Add("Data Structure has been added in the list.");
             }
-            else
+
+            else if (ptr >= rows)
             {
                 MessageBox.Show("Storage is FULL. Please delete a data structure to make space");
+                clearTextBoxes();
             }
 
         }
@@ -68,18 +81,14 @@ namespace DataStructureWiki
         #region EDIT
         private void buttonEDIT_Click(object sender, EventArgs e)
         {
-
-            //listViewData.Items[0].Selected = true;
             int index = listViewData.SelectedIndices[0];
-
             dataStructure[index, 0] = textBoxName.Text;
             dataStructure[index, 1] = textBoxCategory.Text;
             dataStructure[index, 2] = textBoxStructure.Text;
             dataStructure[index, 3] = textBoxDescription.Text;
+            toolStripStatusLabel.Text = textBoxName.Text + " data structure is updated.";
             updateListViewData();
             clearTextBoxes();
-            statusStripMsg.Items.Clear();
-            statusStripMsg.Items.Add("Data structure is updated.");
 
         }
         #endregion EDIT
@@ -88,32 +97,38 @@ namespace DataStructureWiki
         #region DELETE
         private void buttonDELETE_Click(object sender, EventArgs e)
         {
-            DialogResult result;
-            result = MessageBox.Show("Warning! Do you really wish to delete the record?", "Warning", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+
+            if (listViewData.SelectedIndices.Count == 0)
             {
-                int index = listViewData.SelectedIndices[0];
-                listViewData.Items.RemoveAt(index);
-                //shifting the data in structure
-                for (int i = index; i < ptr; i++)
-                {
-                    dataStructure[index, 0] = dataStructure[index + 1, 0];
-                    dataStructure[index, 1] = dataStructure[index + 1, 1];
-                    dataStructure[index, 2] = dataStructure[index + 1, 2];
-                    dataStructure[index, 3] = dataStructure[index + 1, 3];
-
-                }
-                ptr--;
-                // updateListViewData();
-                clearTextBoxes();
-
-                statusStripMsg.Items.Clear();
-                statusStripMsg.Items.Add("Data structure has been deleted.");
+                toolStripStatusLabel.Text = "No record is selected.";
+                return;
             }
             else
             {
-                statusStripMsg.Items.Clear();
-                statusStripMsg.Items.Add("Delete is canceled!");
+                int index = listViewData.SelectedIndices.Count;
+                DialogResult result;
+                result = MessageBox.Show("Warning! Do you really wish to delete the record?", "Warning", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+
+                    listViewData.Items.RemoveAt(index);
+                    //shifting the data in structure
+                    for (int i = index; i < ptr; i++)
+                    {
+                        dataStructure[index, 0] = dataStructure[index + 1, 0];
+                        dataStructure[index, 1] = dataStructure[index + 1, 1];
+                        dataStructure[index, 2] = dataStructure[index + 1, 2];
+                        dataStructure[index, 3] = dataStructure[index + 1, 3];
+                    }
+                    ptr--;
+                    //updateListViewData();
+                    clearTextBoxes();
+
+                }
+                else
+                {
+                    MessageBox.Show("Delete operation is canceled.");
+                }
             }
         }
         #endregion DELETE
@@ -143,8 +158,7 @@ namespace DataStructureWiki
             {
                 saveDataFile(defaultFileName);
             }
-            statusStripMsg.Items.Clear();
-            statusStripMsg.Items.Add("File has been saved.");
+
             clearTextBoxes();
             listViewData.Items.Clear();
 
@@ -182,8 +196,8 @@ namespace DataStructureWiki
             {
 
                 openDataFile(openFileDialog.FileName);
-                statusStripMsg.Items.Clear();
-                statusStripMsg.Items.Add("Contents of file are loaded in ListView.");
+
+
             }
         }
         private void openDataFile(string openFileName)
@@ -223,6 +237,19 @@ namespace DataStructureWiki
         #endregion SaveLoad
 
         #region UTILITIES
+        //Double click textBoxName to clear all the fields
+        private void textBoxName_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            clearTextBoxes();
+            toolStripStatusLabel.Text = "All textboxes are cleared";
+            textBoxName.Focus();
+        }
+
+        private void textBoxName_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(textBoxName, "Double click on the text box to empty all the fields.");
+        }
+
         //9.5	Create a CLEAR method to clear the four text boxes so a new definition can be added
         private void clearTextBoxes()
         {
@@ -232,12 +259,12 @@ namespace DataStructureWiki
             textBoxDescription.Clear();
             textBoxName.Focus();
         }
+
         //9.8	Create a display method that will show the following information in a ListView: Name and Category
         private void updateListViewData()
         {
-
+            sort();
             listViewData.Items.Clear();
-
             for (int i = 0; i < ptr; i++)
             {
                 ListViewItem listViewItem = new ListViewItem(dataStructure[i, 0]);
@@ -254,8 +281,6 @@ namespace DataStructureWiki
 
             //int index = listViewData.Items.IndexOf(listViewData.SelectedItems[0]);
             displayData(pos);
-            statusStripMsg.Items.Clear();
-            statusStripMsg.Items.Add("Data is loaded into textboxes from the listview.");
 
         }
         private void displayData(int pos)
@@ -269,42 +294,11 @@ namespace DataStructureWiki
 
 
         #endregion UTILITIES
-        private void swap(int i)
-        {
-            string temp;
-            for (int j = 0; j < columns; j++)
-            {
-                temp = dataStructure[i, j];
-                dataStructure[i, j] = dataStructure[i + 1, j];
-                dataStructure[i + 1, j] = temp;
-            }
 
-        }
         #region SORT
         // 9.6	Write the code for a Bubble Sort method to sort the 2D array by Name ascending,
         // ensure you use a separate swap method that passes the array element to be swapped (do not use any built-in array methods),
-        private void buttonSORT_Click(object sender, EventArgs e)
-        {
 
-            for (int i = 0; i < ptr; i++)
-            {
-                for (int j = 0; j < ptr - 1; j++)
-                {
-                    if (!(string.IsNullOrEmpty(dataStructure[j + 1, 0])))
-                    {
-                        //int index = i;
-                        if (string.Compare(dataStructure[j, 0], dataStructure[j + 1, 0]) == 1)
-                        {
-                            swap(j);
-
-                        }
-                    }
-
-                }
-            }
-
-            updateListViewData();
-        }
         public void sort()
         {
             for (int i = 0; i < ptr; i++)
@@ -324,7 +318,18 @@ namespace DataStructureWiki
                 }
             }
 
-            updateListViewData();
+            //updateListViewData();
+
+        }
+        private void swap(int i)
+        {
+            string temp;
+            for (int j = 0; j < columns; j++)
+            {
+                temp = dataStructure[i, j];
+                dataStructure[i, j] = dataStructure[i + 1, j];
+                dataStructure[i + 1, j] = temp;
+            }
 
         }
         #endregion SORT
@@ -333,7 +338,7 @@ namespace DataStructureWiki
         // add suitable feedback if the search in not successful and clear the search textbox (do not use any built-in array methods),
         private void buttonSEARCH_Click(object sender, EventArgs e)
         {
-            sort();
+            // sort();
             bool found = false;
             string search;
             search = textBoxSearch.Text;
@@ -347,7 +352,7 @@ namespace DataStructureWiki
             }
             while (!found)
             {
-                if(low >= high)
+                if (low >= high)
                 {
                     found = false;
                     break;
@@ -362,7 +367,7 @@ namespace DataStructureWiki
                 }
                 else if (compare < 0)
                 {
-                    high= mid - 1;
+                    high = mid - 1;
                 }
                 else if (compare > 0)
                 {
@@ -378,5 +383,7 @@ namespace DataStructureWiki
         }
 
         #endregion Binary Search
+
+
     }
 }

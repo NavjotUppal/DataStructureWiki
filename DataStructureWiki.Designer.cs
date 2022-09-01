@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,8 +47,10 @@
             this.listViewData = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusStripMsg = new System.Windows.Forms.StatusStrip();
-            this.buttonSORT = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -83,6 +86,8 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(200, 22);
             this.textBoxName.TabIndex = 3;
+            this.textBoxName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBoxName_MouseDoubleClick);
+            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxName_MouseHover);
             // 
             // textBoxCategory
             // 
@@ -209,32 +214,28 @@
             this.columnHeaderCategory.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeaderCategory.Width = 100;
             // 
-            // statusStripMsg
+            // statusStrip1
             // 
-            this.statusStripMsg.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStripMsg.Location = new System.Drawing.Point(0, 472);
-            this.statusStripMsg.Name = "statusStripMsg";
-            this.statusStripMsg.Size = new System.Drawing.Size(912, 22);
-            this.statusStripMsg.TabIndex = 17;
-            this.statusStripMsg.Text = "statusStrip1";
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 472);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(912, 22);
+            this.statusStrip1.TabIndex = 17;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // buttonSORT
+            // toolStripStatusLabel
             // 
-            this.buttonSORT.Location = new System.Drawing.Point(548, 58);
-            this.buttonSORT.Name = "buttonSORT";
-            this.buttonSORT.Size = new System.Drawing.Size(173, 23);
-            this.buttonSORT.TabIndex = 18;
-            this.buttonSORT.Text = "Click to SORT";
-            this.buttonSORT.UseVisualStyleBackColor = true;
-            this.buttonSORT.Click += new System.EventHandler(this.buttonSORT_Click);
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 16);
             // 
             // DataStructureWiki
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 494);
-            this.Controls.Add(this.buttonSORT);
-            this.Controls.Add(this.statusStripMsg);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.listViewData);
             this.Controls.Add(this.buttonSEARCH);
             this.Controls.Add(this.textBoxSearch);
@@ -253,6 +254,8 @@
             this.Controls.Add(this.label1);
             this.Name = "DataStructureWiki";
             this.Text = "Data Structure Wiki ";
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,8 +281,9 @@
         private System.Windows.Forms.ListView listViewData;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderCategory;
-        private System.Windows.Forms.StatusStrip statusStripMsg;
-        private System.Windows.Forms.Button buttonSORT;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
