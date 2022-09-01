@@ -350,36 +350,39 @@ namespace DataStructureWiki
                 MessageBox.Show("The Search text field is NULL");
                 textBoxSearch.Focus();
             }
-            while (!found)
+            else
             {
-                if (low >= high)
+                while (!found)
                 {
-                    found = false;
-                    break;
+                    if (low >= high)
+                    {
+                        found = false;
+                        break;
+                    }
+                    mid = (low + high) / 2;
+                    int compare = search.CompareTo(dataStructure[mid, 0]);
+                    if (compare == 0)
+                    {
+                        displayData(mid);
+                        listViewData.Items[mid].Selected = true;
+                        found = true;
+                    }
+                    else if (compare < 0)
+                    {
+                        high = mid - 1;
+                    }
+                    else if (compare > 0)
+                    {
+                        low = mid + 1;
+                    }
                 }
-                mid = (low + high) / 2;
-                int compare = search.CompareTo(dataStructure[mid, 0]);
-                if (compare == 0)
+                if (found == false)
                 {
-                    displayData(mid);
-                    listViewData.Items[mid].Selected = true;
-                    found = true;
+                    MessageBox.Show(search + " not found. Try again");
                 }
-                else if (compare < 0)
-                {
-                    high = mid - 1;
-                }
-                else if (compare > 0)
-                {
-                    low = mid + 1;
-                }
+                textBoxSearch.Clear();
+                textBoxSearch.Focus();
             }
-            if (found == false)
-            {
-                MessageBox.Show(search + " not found. Try again");
-            }
-            textBoxSearch.Clear();
-            textBoxSearch.Focus();
         }
 
         #endregion Binary Search
